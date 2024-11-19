@@ -1,5 +1,6 @@
 services:
     tabby:
+        container_name: tabby
         build: .
         restart: always
         depends_on:
@@ -7,13 +8,14 @@ services:
         ports:
         - 9090:80
         environment:
-        - DATABASE_URL=mysql://root:123@db/tabby
+        - DATABASE_URL=mysql://root:123@tabby-db/tabby
         - PORT=80
         - DEBUG=False
-        - DOCKERIZE_ARGS="-wait tcp://db:3306 -timeout 60s"
+        - DOCKERIZE_ARGS="-wait tcp://tabby-db:3306 -timeout 60s"
         # - APP_DIST_STORAGE="file:///app-dist"
 
     db:
+        container_name: tabby-db
         image: mariadb:10.7.1
         restart: always
         environment:
